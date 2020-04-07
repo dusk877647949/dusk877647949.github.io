@@ -152,6 +152,69 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-必应图片" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/07/%E5%BF%85%E5%BA%94%E5%9B%BE%E7%89%87/">必应图片</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/07/%E5%BF%85%E5%BA%94%E5%9B%BE%E7%89%87/" class="archive-article-date">
+  	<time datetime="2020-04-07T11:40:44.658Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests  <span class="comment"># 爬取网页</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree  <span class="comment"># 提取数据</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BingCrawler</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 相关变量声明</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.BASE_URL = <span class="string">"https://bing.ioliu.cn"</span>  <span class="comment"># 爬取的网址</span></span><br><span class="line">        self.TOTAL_PAGE = <span class="number">124</span>  <span class="comment"># 要获取的页数</span></span><br><span class="line">        self.headers = &#123;  <span class="comment"># 伪装成浏览器</span></span><br><span class="line">            <span class="string">"user-agent"</span>: <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment"># 爬取每一个的网页源代码</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">spider</span><span class="params">(self)</span>:</span></span><br><span class="line">        session = requests.Session()  <span class="comment"># 会议存储</span></span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> range(<span class="number">1</span>, self.TOTAL_PAGE + <span class="number">1</span>):  <span class="comment"># for循环</span></span><br><span class="line">            url = self.BASE_URL + <span class="string">f"/?p=<span class="subst">&#123;index&#125;</span>"</span>  <span class="comment"># 改变url</span></span><br><span class="line">            response = session.get(url=url, headers=self.headers)  <span class="comment"># 获取的网页源代码</span></span><br><span class="line">            <span class="keyword">yield</span> response.content.decode(<span class="string">"utf8"</span>)  <span class="comment"># 返回获取的网页源代码</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod  # 静态方法</span></span><br><span class="line">    <span class="comment"># 获取每张图片的网址</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parser</span><span class="params">(html)</span>:</span></span><br><span class="line">        selector = etree.HTML(html)  <span class="comment"># 变成xpath能够处理的对象</span></span><br><span class="line">        url_list = selector.xpath(<span class="string">"//div[@class='item']//div[@class='options']/a[2]/@href"</span>)  <span class="comment"># 获取相关图片的网址</span></span><br><span class="line">        <span class="keyword">return</span> url_list  <span class="comment"># 返回该网址</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">save_picture</span><span class="params">(self, url_list)</span>:</span></span><br><span class="line">        session = requests.Session()    <span class="comment">#会议</span></span><br><span class="line">        <span class="keyword">for</span> url <span class="keyword">in</span> url_list:</span><br><span class="line">            file_name = url.split(<span class="string">"/"</span>)[<span class="number">2</span>][:<span class="number">-15</span>] + <span class="string">".jpg"</span></span><br><span class="line">            picture_url = self.BASE_URL + url</span><br><span class="line">            response = session.get(picture_url, headers=self.headers)</span><br><span class="line">            <span class="keyword">with</span> open(file_name, <span class="string">"wb"</span>) <span class="keyword">as</span> file:  <span class="comment"># 二进制写入</span></span><br><span class="line">                file.write(response.content)  <span class="comment"># 二进制的方式保存</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 启动函数</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        html_gen = self.spider()</span><br><span class="line">        <span class="keyword">for</span> html <span class="keyword">in</span> html_gen:</span><br><span class="line">            url_list = self.parser(html)  <span class="comment"># 获取每张图片的网址</span></span><br><span class="line">            self.save_picture(url_list)  <span class="comment"># 保存下载到本地</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 程序入口</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment"># 实例化对象</span></span><br><span class="line">    bing_spider = BingCrawler()</span><br><span class="line">    <span class="comment"># 运行run函数</span></span><br><span class="line">    bing_spider.run()</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/07/%E5%BF%85%E5%BA%94%E5%9B%BE%E7%89%87/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-我的第三份作业" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -237,7 +300,93 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="Python-File-文件-方法"><a href="#Python-File-文件-方法" class="headerlink" title="Python File(文件) 方法"></a>Python File(文件) 方法</h1><h3 id="open-方法"><a href="#open-方法" class="headerlink" title="open() 方法"></a>open() 方法</h3><p>Python open() 方法用于打开一个文件，并返回文件对象，在对文件进行处理过程都需要使用到这个函数，如果该文件无法被打开，会抛出 OSError。</p>
+<p>注意：使用 open() 方法一定要保证关闭文件对象，即调用 close() 方法。</p>
+<p>open() 函数常用形式是接收两个参数：文件名(file)和模式(mode)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open(file, mode=<span class="string">'r'</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="完整的语法格式为："><a href="#完整的语法格式为：" class="headerlink" title="完整的语法格式为："></a>完整的语法格式为：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open(file, mode=<span class="string">'r'</span>, buffering=<span class="number">-1</span>, encoding=<span class="literal">None</span>, errors=<span class="literal">None</span>, newline=<span class="literal">None</span>, closefd=<span class="literal">True</span>, opener=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明:"></a>参数说明:</h3><p>file: 必需，文件路径（相对或者绝对路径）。<br>mode: 可选，文件打开模式<br>buffering: 设置缓冲<br>encoding: 一般使用utf8<br>errors: 报错级别<br>newline: 区分换行符<br>closefd: 传入的file参数类型<br>opener:</p>
+<h3 id="mode-参数有："><a href="#mode-参数有：" class="headerlink" title="mode 参数有："></a>mode 参数有：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">模式	描述</span><br><span class="line">t	文本模式 (默认)。</span><br><span class="line">x	写模式，新建一个文件，如果该文件已存在则会报错。</span><br><span class="line">b	二进制模式。</span><br><span class="line">+	打开一个文件进行更新(可读可写)。</span><br><span class="line">U	通用换行模式（不推荐）。</span><br><span class="line">r	以只读方式打开文件。文件的指针将会放在文件的开头。这是默认模式。</span><br><span class="line">rb	以二进制格式打开一个文件用于只读。文件指针将会放在文件的开头。这是默认模式。一般用于非文本文件如图片等。</span><br><span class="line">r+	打开一个文件用于读写。文件指针将会放在文件的开头。</span><br><span class="line">rb+	以二进制格式打开一个文件用于读写。文件指针将会放在文件的开头。一般用于非文本文件如图片等。</span><br><span class="line">w	打开一个文件只用于写入。如果该文件已存在则打开文件，并从开头开始编辑，即原有内容会被删除。如果该文件不存在，创建新文件。</span><br><span class="line">wb	以二进制格式打开一个文件只用于写入。如果该文件已存在则打开文件，并从开头开始编辑，即原有内容会被删除。如果该文件不存在，创建新文件。一般用于非文本文件如图片等。</span><br><span class="line">w+	打开一个文件用于读写。如果该文件已存在则打开文件，并从开头开始编辑，即原有内容会被删除。如果该文件不存在，创建新文件。</span><br><span class="line">wb+	以二进制格式打开一个文件用于读写。如果该文件已存在则打开文件，并从开头开始编辑，即原有内容会被删除。如果该文件不存在，创建新文件。一般用于非文本文件如图片等。</span><br><span class="line">a	打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。也就是说，新的内容将会被写入到已有内容之后。如果该文件不存在，创建新文件进行写入。</span><br><span class="line">ab	以二进制格式打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。也就是说，新的内容将会被写入到已有内容之后。如果该文件不存在，创建新文件进行写入。</span><br><span class="line">a+	打开一个文件用于读写。如果该文件已存在，文件指针将会放在文件的结尾。文件打开时会是追加模式。如果该文件不存在，创建新文件用于读写。</span><br><span class="line">ab+	以二进制格式打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。如果该文件不存在，创建新文件用于读写。</span><br><span class="line">默认为文本模式，如果要以二进制模式打开，加上 b 。</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="file-对象"><a href="#file-对象" class="headerlink" title="file 对象"></a>file 对象</h2><p>file 对象使用 open 函数来创建，下表列出了 file 对象常用的函数：</p>
+<p>序号    方法及描述<br>1    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file.close()</span><br></pre></td></tr></table></figure>
+
+
+<p>关闭文件。关闭后文件不能再进行读写操作。</p>
+<p>2    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file.flush()</span><br></pre></td></tr></table></figure>
+
+
+
+<p>刷新文件内部缓冲，直接把内部缓冲区的数据立刻写入文件, 而不是被动的等待输出缓冲区写入。</p>
+<p>3    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file.fileno()</span><br></pre></td></tr></table></figure>
+
+
+
+<p>返回一个整型的文件描述符(file descriptor FD 整型), 可以用在如os模块的read方法等一些底层操作上。</p>
+<p>4    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file.isatty()</span><br></pre></td></tr></table></figure>
+
+
+<p>如果文件连接到一个终端设备返回 True，否则返回 False。</p>
+<p>5    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file.next()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>返回文件下一行。</p>
+<p>6    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file.read([size])</span><br></pre></td></tr></table></figure>
+
+
+<p>从文件读取指定的字节数，如果未给定或为负则读取所有。</p>
+<p>7    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file.readline([size])</span><br></pre></td></tr></table></figure>
+
+
+
+<p>读取整行，包括 “\n” 字符。</p>
+<p>8    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file.readlines([sizeint])</span><br></pre></td></tr></table></figure>
+
+
+<p>读取所有行并返回列表，若给定sizeint&gt;0，则是设置一次读多少字节，这是为了减轻读取压力。</p>
+<p>9    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file.seek(offset[, whence])</span><br></pre></td></tr></table></figure>
+
+
+
+<p>设置文件当前位置</p>
+<p>10    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file.tell()</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>返回文件当前位置。</p>
+<p>11    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file.truncate([size])</span><br></pre></td></tr></table></figure>
+
+
+
+<p>截取文件，截取的字节通过size指定，默认为当前文件位置。</p>
+<p>12    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file.write(str)</span><br></pre></td></tr></table></figure>
+
+
+<p>将字符串写入文件，返回的是写入的字符长度。</p>
+<p>13    </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file.writelines(sequence)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>向文件写入一个序列字符串列表，如果需要换行则要自己加入每行的换行符。</p>
+
       
 
       
